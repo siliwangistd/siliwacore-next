@@ -2,17 +2,17 @@ import client from "@/tina/__generated__/client";
 import PageLayout from "@/components/layouts/page.layout";
 
 type HomePageProps = {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 };
 
 const HomePage = async (props: HomePageProps) => {
   const { params } = props;
-  const { locale } = await params;
+  const { locale, slug } = await params;
 
   // Fetch both queries at the same time for better performance
   const [pageRes, globalRes] = await Promise.all([
     client.queries.page({
-      relativePath: `${locale}/_index.mdx`,
+      relativePath: `${locale}/${slug}.mdx`,
     }),
     client.queries.global({
       relativePath: `${locale}/_index.mdx`,
