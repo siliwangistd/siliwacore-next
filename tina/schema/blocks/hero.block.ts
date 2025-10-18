@@ -1,6 +1,6 @@
 import type { Template } from "tinacms";
 
-export const heroBlock: Template = {
+const heroBlock: Template = {
   name: "hero",
   label: "Hero",
   fields: [
@@ -9,3 +9,5 @@ export const heroBlock: Template = {
     { name: "image", label: "Image", type: "image" },
   ],
 };
+
+export default heroBlock;

@@ -1,6 +1,6 @@
 import type { Template } from "tinacms";
 
-export const featureBlock: Template = {
+const featureBlock: Template = {
   name: "featureList",
   label: "Feature List",
   fields: [
@@ -18,3 +18,5 @@ export const featureBlock: Template = {
     },
   ],
 };
+
+export default featureBlock;

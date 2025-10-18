@@ -12,13 +12,43 @@ const globalSchema: Collection = {
   // It prevents editors from creating or deleting documents in this collection.
   ui: {
     allowedActions: {
-      create: true,
-      delete: true,
+      create: false,
+      delete: false,
     },
     global: true,
   },
   fields: [
     // We group fields into objects for better organization in the UI
+    {
+      name: "siteInfo",
+      label: "Site Information",
+      type: "object",
+      fields: [
+        {
+          type: "string",
+          name: "siteName",
+          label: "Site Name",
+          description: "The official name of the brand (e.g., Siliwacore).",
+          required: true,
+        },
+        {
+          type: "string",
+          name: "siteTagline",
+          label: "Site Tagline",
+          description: "A short, catchy phrase for SEO and branding.",
+        },
+        {
+          type: "string",
+          name: "companyEmail",
+          label: "Contact Email",
+        },
+        {
+          type: "string",
+          name: "companyPhone",
+          label: "Contact Phone",
+        },
+      ],
+    },
     {
       name: "header",
       label: "Header Settings",

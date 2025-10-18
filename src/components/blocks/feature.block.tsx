@@ -9,7 +9,7 @@ export const FeatureBlock = (props: PageBlocksFeatureList) => {
         <h2
           // Links the <h2> to the top-level 'title' field in the CMS.
           data-tina-field={tinaField(props, "title")}
-          className="mb-12 text-4xl font-bold text-gray-900 dark:text-white"
+          className="mb-12 text-4xl font-bold text-gray-900"
         >
           {props.title}
         </h2>
@@ -19,7 +19,7 @@ export const FeatureBlock = (props: PageBlocksFeatureList) => {
           {props.features?.map((feature, i) => (
             <div
               key={i}
-              className="flex flex-col items-center rounded-lg bg-white p-6 shadow-lg dark:bg-gray-700"
+              className="flex flex-col items-center rounded-lg bg-white p-6 shadow-lg"
             >
               {feature?.icon && (
                 <img
@@ -33,14 +33,14 @@ export const FeatureBlock = (props: PageBlocksFeatureList) => {
               <h3
                 // Links this <h3> to the 'title' field within a specific feature item.
                 data-tina-field={tinaField(feature, "title")}
-                className="mb-2 text-2xl font-semibold text-gray-900 dark:text-white"
+                className="mb-2 text-2xl font-semibold text-gray-900"
               >
                 {feature?.title}
               </h3>
               <p
                 // Links this <p> to the 'description' field within a specific feature item.
                 data-tina-field={tinaField(feature, "description")}
-                className="text-gray-600 dark:text-gray-300"
+                className="text-gray-600"
               >
                 {feature?.description}
               </p>

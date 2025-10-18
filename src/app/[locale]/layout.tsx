@@ -2,12 +2,34 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing"; // Your i18n routing config
 import { getMessages } from "next-intl/server";
+import { Metadata } from "next";
+import { localizedMetadata } from "@/src/i18n/metadata";
 
 // Define the props, including `children` and the `locale` from the URL.
 type LocaleLayoutProps = {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: "en" | "id" }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const metadata = localizedMetadata[locale] || localizedMetadata.en;
+
+  return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
+
+    // ✅ This is the default template for all regular pages
+    title: {
+      template: metadata.title.template, // e.g., "%s | Siliwacore"
+      default: metadata.title.default, // e.g., "Siliwacore - A Starter template for Next.js apps"
+    },
+    description: metadata.description,
+  };
+}
 
 /**
  * This layout wraps all pages and provides the language context.

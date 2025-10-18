@@ -6,19 +6,19 @@ import { PageBlocksHero } from "@/tina/__generated__/types";
 export const HeroBlock = (props: PageBlocksHero) => {
   return (
     <>
-      <section className="bg-gray-100 py-20 text-center dark:bg-gray-800">
+      <section className="bg-gray-100 py-20 text-center">
         <div className="container mx-auto px-6">
           <h1
             // Links this H1 to the 'headline' field in TinaCMS
             data-tina-field={tinaField(props, "headline")}
-            className="text-5xl font-extrabold text-gray-900 dark:text-white"
+            className="text-5xl font-extrabold text-gray-900"
           >
             {props.headline}
           </h1>
           <div
             // Links this container to the 'subheadline' rich-text field
             data-tina-field={tinaField(props, "subheadline")}
-            className="prose prose-lg mx-auto mt-4 text-gray-600 dark:text-gray-300"
+            className="prose prose-lg mx-auto mt-4 text-gray-600"
           >
             {/* Renders the rich-text content from the CMS */}
             <TinaMarkdown content={props.subheadline} />

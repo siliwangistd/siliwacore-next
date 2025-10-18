@@ -1,6 +1,7 @@
 import { Collection } from "tinacms";
-import { heroBlock } from "@/tina/schema/blocks/hero.block";
-import { featureBlock } from "@/tina/schema/blocks/feature.block";
+import heroBlock from "@/tina/schema/blocks/hero.block";
+import featureBlock from "@/tina/schema/blocks/feature.block";
+import seoFields from "@/tina/schema/fields/seo.field";
 
 const pageSchema: Collection = {
   name: "page",
@@ -26,6 +27,12 @@ const pageSchema: Collection = {
       type: "string",
       isTitle: true,
       required: true,
+    },
+    {
+      type: "object",
+      name: "seo",
+      label: "SEO Settings",
+      fields: seoFields,
     },
     {
       name: "blocks",
