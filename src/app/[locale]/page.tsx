@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import client from "@/tina/__generated__/client";
+import { notFound } from "next/navigation";
+
 import PageLayout from "@/components/layouts/page.layout";
 
 type HomePageProps = {
@@ -41,16 +43,26 @@ export async function generateMetadata({
 const HomePage = async (props: HomePageProps) => {
   const { locale } = await props.params;
 
-  const [pageRes, globalRes] = await Promise.all([
-    client.queries.page({
-      relativePath: `${locale}/_index.mdx`,
-    }),
-    client.queries.global({
-      relativePath: `${locale}/_index.mdx`,
-    }),
-  ]);
+  try {
+    const [pageRes, globalRes] = await Promise.all([
+      client.queries.page({
+        relativePath: `${locale}/_index.mdx`,
+      }),
+      client.queries.global({
+        relativePath: `${locale}/_index.mdx`,
+      }),
+    ]);
 
-  return <PageLayout initialPageData={pageRes} initialGlobalData={globalRes} />;
+    if (!pageRes.data.page) {
+      notFound(); // 👈 Trigger 404 if no page data
+    }
+
+    return (
+      <PageLayout initialPageData={pageRes} initialGlobalData={globalRes} />
+    );
+  } catch (error) {
+    notFound(); // 👈 Trigger 404 on any fetch error
+  }
 };
 
 export default HomePage;

@@ -5,7 +5,7 @@ type FooterProps = {
   footer: GlobalFooter;
 };
 
-export const Footer = ({ footer }: FooterProps) => {
+const Footer = ({ footer }: FooterProps) => {
   return (
     <footer className="bg-gray-800 text-white py-8 px-8">
       <div className="container mx-auto grid md:grid-cols-3 gap-8">
@@ -44,3 +44,5 @@ export const Footer = ({ footer }: FooterProps) => {
     </footer>
   );
 };
+
+export default Footer;

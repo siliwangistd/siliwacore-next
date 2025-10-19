@@ -7,7 +7,7 @@ type HeaderProps = {
   header: GlobalHeader;
 };
 
-export const Header = ({ header }: HeaderProps) => {
+const Header = ({ header }: HeaderProps) => {
   return (
     <header className="py-4 px-8 border-b">
       <div className="container mx-auto flex justify-between items-center">
@@ -46,3 +46,5 @@ export const Header = ({ header }: HeaderProps) => {
     </header>
   );
 };
+
+export default Header;

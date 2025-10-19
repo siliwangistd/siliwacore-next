@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
-import { routing } from "@/i18n/routing"; // Your i18n routing config
 import { getMessages } from "next-intl/server";
 import { Metadata } from "next";
+
+import { routing } from "@/i18n/routing"; // Your i18n routing config
 import { localizedMetadata } from "@/src/i18n/metadata";
 
 // Define the props, including `children` and the `locale` from the URL.

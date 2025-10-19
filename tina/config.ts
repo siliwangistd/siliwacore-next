@@ -3,6 +3,7 @@ import { defineConfig } from "tinacms";
 // Collections
 import pageSchema from "@/tina/schema/page.schema";
 import globalSchema from "@/tina/schema/global.schema";
+import notFoundSchema from "@/tina/schema/notFound.schema";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -32,7 +33,7 @@ export default defineConfig({
 
   // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
   schema: {
-    collections: [pageSchema, globalSchema],
+    collections: [pageSchema, globalSchema, notFoundSchema],
   },
 
   cmsCallback: (cms) => {

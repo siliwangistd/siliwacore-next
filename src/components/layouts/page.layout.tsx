@@ -9,9 +9,10 @@ import {
   PageBlocks,
   PageQuery,
 } from "@/tina/__generated__/types";
-import { Header } from "@/components/global/header.global"; // Example component
-import { Footer } from "@/components/global/footer.global"; // Example component
-import { BlockRenderer } from "@/components/layouts/blockRenderer.layout"; // Your component to render blocks
+
+import Header from "@/components/global/header.global"; // Example component
+import Footer from "@/components/global/footer.global"; // Example component
+import BlockRenderer from "@/components/layouts/blockRenderer.layout"; // Your component to render blocks
 
 // Define clear, flattened props
 type PageLayoutClientProps = {
