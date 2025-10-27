@@ -8,8 +8,8 @@ const notFoundSchema: Collection = {
   ui: {
     // This prevents editors from creating/deleting the essential 404 files
     allowedActions: {
-      create: true,
-      delete: true,
+      create: false,
+      delete: false,
     },
   },
   fields: [

@@ -51,11 +51,11 @@ const NotFoundLayout = (props: NotFoundLayoutProps) => {
       <main>
         <div className="flex flex-col items-center justify-center px-5 py-20 min-h-[60vh] text-center">
           <Image
-            src={notFoundData.notFound.image || "/images/404-illustration.png"}
+            src={notFoundData.notFound.image || "/uploads/404-image.svg"}
             alt="Page Not Found Illustration"
-            width={300}
-            height={200}
-            className="w-full max-w-[300px] h-auto mb-8"
+            width={350}
+            height={250}
+            className="w-full max-w-[350px] h-auto mb-8"
           />
 
           <h1 className="text-5xl font-bold text-gray-900">404</h1>

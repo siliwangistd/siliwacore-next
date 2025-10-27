@@ -64,6 +64,11 @@ const globalSchema: Collection = {
           label: "Navigation Links",
           type: "object",
           list: true,
+          ui: {
+            itemProps: (item: any) => {
+              return { label: item.label };
+            },
+          },
           fields: [
             {
               name: "label",
@@ -108,6 +113,11 @@ const globalSchema: Collection = {
           label: "Social Media Links",
           type: "object",
           list: true,
+          ui: {
+            itemProps: (item: any) => {
+              return { label: item.platform };
+            },
+          },
           fields: [
             {
               name: "platform",
@@ -127,6 +137,11 @@ const globalSchema: Collection = {
           label: "Legal Links",
           type: "object",
           list: true,
+          ui: {
+            itemProps: (item: any) => {
+              return { label: item.label };
+            },
+          },
           fields: [
             {
               name: "label",
