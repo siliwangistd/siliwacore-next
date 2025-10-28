@@ -4,13 +4,13 @@ import client from "@/tina/__generated__/client";
 import PageLayout from "@/components/layouts/page.layout";
 import { ServiceConnection } from "@/tina/__generated__/types";
 
-type HomePageProps = {
+type ServicesPageProps = {
   params: Promise<{ locale: string; slug: string }>;
 };
 
 export async function generateMetadata({
   params,
-}: HomePageProps): Promise<Metadata> {
+}: ServicesPageProps): Promise<Metadata> {
   const { locale } = await params;
 
   const [pageRes, globalRes] = await Promise.all([
@@ -40,7 +40,7 @@ export async function generateMetadata({
   };
 }
 
-const HomePage = async (props: HomePageProps) => {
+const ServicesPage = async (props: ServicesPageProps) => {
   const { locale } = await props.params;
 
   // --- Step 1: Fetch only the page and global data ---
@@ -94,4 +94,4 @@ const HomePage = async (props: HomePageProps) => {
   );
 };
 
-export default HomePage;
+export default ServicesPage;
