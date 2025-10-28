@@ -14,6 +14,8 @@ import Header from "@/components/global/header.global"; // Example component
 import Footer from "@/components/global/footer.global"; // Example component
 import BlockRenderer from "@/components/layouts/blockRenderer.layout"; // Your component to render blocks
 
+export type SlugMap = { [locale: string]: string };
+
 // Define clear, flattened props
 type ServiceLayoutClientProps = {
   initialServiceData: {
@@ -26,6 +28,7 @@ type ServiceLayoutClientProps = {
     variables: Exact<{ relativePath: string }>;
     query: string;
   };
+  initialSlugMap?: SlugMap;
 };
 
 const ServiceLayout = (props: ServiceLayoutClientProps) => {
@@ -33,12 +36,13 @@ const ServiceLayout = (props: ServiceLayoutClientProps) => {
   const { data: serviceData } = useTina(props.initialServiceData);
   const { data: globalData } = useTina(props.initialGlobalData);
 
-  console.log("Rendering ServiceLayout with serviceData:", serviceData);
-
   return (
     <>
       {/* Pass live global data to your Header */}
-      <Header header={globalData.global.header as GlobalHeader} />
+      <Header
+        header={globalData.global.header as GlobalHeader}
+        slugMap={props.initialSlugMap}
+      />
 
       <main>
         {/* Render your service blocks */}

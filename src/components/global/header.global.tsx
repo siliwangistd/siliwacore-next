@@ -2,13 +2,16 @@ import Link from "next/link";
 import Image from "next/image";
 import type { GlobalHeader } from "@/tina/__generated__/types";
 import { useLocale } from "next-intl";
+import LanguageSwitcher from "../ui/languageSwitcher.ui";
+import { SlugMap } from "../layouts/page.layout";
 
 // The component receives a 'header' object with a specific type from TinaCMS.
 type HeaderProps = {
   header: GlobalHeader;
+  slugMap?: SlugMap;
 };
 
-const Header = ({ header }: HeaderProps) => {
+const Header = ({ header, slugMap }: HeaderProps) => {
   const locale = useLocale();
 
   return (
@@ -36,6 +39,10 @@ const Header = ({ header }: HeaderProps) => {
               {nav?.label}
             </Link>
           ))}
+
+          {/* Language Switcher */}
+          <LanguageSwitcher slugMap={slugMap} />
+
           {header?.ctaButton?.label && (
             <Link
               href={header.ctaButton.link || "#"}

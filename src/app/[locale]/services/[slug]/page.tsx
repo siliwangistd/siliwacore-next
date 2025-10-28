@@ -4,6 +4,7 @@ import client from "@/tina/__generated__/client";
 
 import ServiceLayout from "@/src/components/layouts/service.layout";
 import { warn } from "console";
+import createSlugMap from "@/src/components/helpers/createSlugMap.helper";
 
 type ServicePageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -35,9 +36,11 @@ const ServicePage = async (props: ServicePageProps) => {
   const { params } = props;
   const { locale, slug } = await params;
 
+  let slugMap, serviceRes, globalRes;
+
   try {
     // Fetch both queries at the same time for better performance
-    const [serviceRes, globalRes] = await Promise.all([
+    [serviceRes, globalRes] = await Promise.all([
       client.queries.service({
         relativePath: `${locale}/${slug}.mdx`,
       }),
@@ -45,6 +48,11 @@ const ServicePage = async (props: ServicePageProps) => {
         relativePath: `${locale}/_index.mdx`,
       }),
     ]);
+
+    const translationKey = serviceRes.data.service.translationKey;
+    if (translationKey) {
+      slugMap = await createSlugMap("service", translationKey);
+    }
 
     if (!serviceRes.data.service) {
       notFound(); // 👈 Trigger 404 if no page data
@@ -54,6 +62,7 @@ const ServicePage = async (props: ServicePageProps) => {
       <ServiceLayout
         initialServiceData={serviceRes}
         initialGlobalData={globalRes}
+        initialSlugMap={slugMap}
       />
     );
   } catch (error) {

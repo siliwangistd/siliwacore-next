@@ -3,6 +3,8 @@ import client from "@/tina/__generated__/client";
 
 import PageLayout from "@/components/layouts/page.layout";
 import { ServiceConnection } from "@/tina/__generated__/types";
+import createSlugMap from "@/src/components/helpers/createSlugMap.helper";
+import { warn } from "console";
 
 type ServicesPageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -43,53 +45,66 @@ export async function generateMetadata({
 const ServicesPage = async (props: ServicesPageProps) => {
   const { locale } = await props.params;
 
-  // --- Step 1: Fetch only the page and global data ---
-  // (Note: I corrected your globalRes path from _index.mdx to .mdx)
-  const [pageRes, globalRes] = await Promise.all([
-    client.queries.page({
-      relativePath: `${locale}/_services.mdx`,
-    }),
-    client.queries.global({
-      relativePath: `${locale}/_index.mdx`,
-    }),
-  ]);
+  let pageRes, globalRes, slugMap;
 
-  // --- Step 2: Check if the page needs services data ---
-  const hasServiceList = pageRes.data.page.blocks?.some(
-    (block) => block?.__typename === "PageBlocksServiceList"
-  );
+  try {
+    // --- Step 1: Fetch only the page and global data ---
+    // (Note: I corrected your globalRes path from _index.mdx to .mdx)
+    [pageRes, globalRes] = await Promise.all([
+      client.queries.page({
+        relativePath: `${locale}/_services.mdx`,
+      }),
+      client.queries.global({
+        relativePath: `${locale}/_index.mdx`,
+      }),
+    ]);
 
-  // --- Step 3: Fetch services ONLY if the block exists ---
-  const servicePromise = hasServiceList
-    ? client.queries.serviceConnection({
-        filter: {
-          draft: {
-            eq: false,
+    const translationKey = pageRes.data.page.translationKey;
+    if (translationKey) {
+      slugMap = await createSlugMap("page", translationKey);
+    }
+
+    // --- Step 2: Check if the page needs services data ---
+    const hasServiceList = pageRes.data.page.blocks?.some(
+      (block) => block?.__typename === "PageBlocksServiceList"
+    );
+
+    // --- Step 3: Fetch services ONLY if the block exists ---
+    const servicePromise = hasServiceList
+      ? client.queries.serviceConnection({
+          filter: {
+            draft: {
+              eq: false,
+            },
           },
-        },
-      })
-    : Promise.resolve({ data: null });
+        })
+      : Promise.resolve({ data: null });
 
-  const [serviceRes] = await Promise.all([servicePromise]);
+    const [serviceRes] = await Promise.all([servicePromise]);
 
-  const filteredServiceEdges = (
-    serviceRes?.data?.serviceConnection?.edges || []
-  ).filter((edge) =>
-    edge?.node?._sys.path.startsWith(`src/content/services/${locale}/`)
-  );
+    const filteredServiceEdges = (
+      serviceRes?.data?.serviceConnection?.edges || []
+    ).filter((edge) =>
+      edge?.node?._sys.path.startsWith(`src/content/services/${locale}/`)
+    );
 
-  return (
-    <PageLayout
-      initialPageData={pageRes}
-      initialGlobalData={globalRes}
-      initialServicesData={{
-        data: {
-          ...serviceRes?.data?.serviceConnection,
-          edges: filteredServiceEdges,
-        } as ServiceConnection,
-      }}
-    />
-  );
+    return (
+      <PageLayout
+        initialPageData={pageRes}
+        initialGlobalData={globalRes}
+        initialServicesData={{
+          data: {
+            ...serviceRes?.data?.serviceConnection,
+            edges: filteredServiceEdges,
+          } as ServiceConnection,
+        }}
+        initialSlugMap={slugMap}
+      />
+    );
+  } catch (error) {
+    warn("Error fetching data for ServicesPage:", error);
+    return null;
+  }
 };
 
 export default ServicesPage;

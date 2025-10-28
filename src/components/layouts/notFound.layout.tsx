@@ -9,7 +9,7 @@ import {
   NotFoundQuery,
 } from "@/tina/__generated__/types";
 
-import NotFoundTitle from "@/components/helpers/NotFoundTitle.helper";
+import NotFoundTitle from "@/src/components/helpers/notFoundTitle.helper";
 
 // Components for global header and footer
 import Header from "@/components/global/header.global";

@@ -15,6 +15,8 @@ import Header from "@/components/global/header.global"; // Example component
 import Footer from "@/components/global/footer.global"; // Example component
 import BlockRenderer from "@/components/layouts/blockRenderer.layout"; // Your component to render blocks
 
+export type SlugMap = { [locale: string]: string };
+
 // Define clear, flattened props
 type PageLayoutClientProps = {
   initialPageData: {
@@ -28,6 +30,7 @@ type PageLayoutClientProps = {
     query: string;
   };
   initialServicesData?: { data: ServiceConnection | null };
+  initialSlugMap?: SlugMap;
 };
 
 const PageLayout = (props: PageLayoutClientProps) => {
@@ -39,7 +42,10 @@ const PageLayout = (props: PageLayoutClientProps) => {
   return (
     <>
       {/* Pass live global data to your Header */}
-      <Header header={globalData.global.header as GlobalHeader} />
+      <Header
+        header={globalData.global.header as GlobalHeader}
+        slugMap={props.initialSlugMap}
+      />
 
       <main>
         {/* Render your page blocks */}
