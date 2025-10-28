@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import client from "@/tina/__generated__/client";
 
 import ServiceLayout from "@/src/components/layouts/service.layout";
+import { warn } from "console";
 
 type ServicePageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -56,6 +57,7 @@ const ServicePage = async (props: ServicePageProps) => {
       />
     );
   } catch (error) {
+    warn("Error fetching page or global data:", error);
     notFound(); // 👈 Trigger 404 on any fetch error
   }
 };

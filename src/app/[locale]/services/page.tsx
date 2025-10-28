@@ -54,8 +54,6 @@ const ServicesPage = async (props: ServicesPageProps) => {
     }),
   ]);
 
-  let servicesRes: { data: ServiceConnection } | null | undefined = null; // Initialize services as null
-
   // --- Step 2: Check if the page needs services data ---
   const hasServiceList = pageRes.data.page.blocks?.some(
     (block) => block?.__typename === "PageBlocksServiceList"

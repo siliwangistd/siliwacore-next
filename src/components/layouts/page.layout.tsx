@@ -27,7 +27,7 @@ type PageLayoutClientProps = {
     variables: Exact<{ relativePath: string }>;
     query: string;
   };
-  initialServicesData: { data: ServiceConnection | null };
+  initialServicesData?: { data: ServiceConnection | null };
 };
 
 const PageLayout = (props: PageLayoutClientProps) => {

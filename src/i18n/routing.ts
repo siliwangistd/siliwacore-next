@@ -1,7 +1,6 @@
 // We're importing tools from the `next-intl` library to help manage
 // our website's languages and URLs.
 import { defineRouting } from "next-intl/routing";
-import { createNavigation } from "next-intl/navigation";
 
 /**
  * Here, we set up the main rules for our website's internationalization (i18n).

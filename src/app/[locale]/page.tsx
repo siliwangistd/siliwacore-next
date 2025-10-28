@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import client from "@/tina/__generated__/client";
-import { notFound } from "next/navigation";
 
 import PageLayout from "@/components/layouts/page.layout";
 import { ServiceConnection } from "@/tina/__generated__/types";
@@ -54,8 +53,6 @@ const HomePage = async (props: HomePageProps) => {
       relativePath: `${locale}/_index.mdx`,
     }),
   ]);
-
-  let servicesRes: { data: ServiceConnection } | null | undefined = null; // Initialize services as null
 
   // --- Step 2: Check if the page needs services data ---
   const hasServiceList = pageRes.data.page.blocks?.some(

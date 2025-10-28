@@ -1,6 +1,7 @@
 import { tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { PageBlocksHero, ServiceBlocksHero } from "@/tina/__generated__/types";
+import Image from "next/image";
 
 // This component receives props that match the fields defined in your 'hero' block schema.
 const HeroBlock = (props: PageBlocksHero | ServiceBlocksHero) => {
@@ -24,12 +25,14 @@ const HeroBlock = (props: PageBlocksHero | ServiceBlocksHero) => {
             <TinaMarkdown content={props.subheadline} />
           </div>
           {props.image && (
-            <img
+            <Image
               // Links this image to the 'image' field
               data-tina-field={tinaField(props, "image")}
               src={props.image}
               alt="Hero Image"
               className="mx-auto mt-8 h-auto max-h-96 rounded-lg shadow-md"
+              width={800}
+              height={600}
             />
           )}
         </div>

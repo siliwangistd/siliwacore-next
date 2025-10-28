@@ -6,7 +6,6 @@ import {
   GlobalFooter,
   GlobalHeader,
   GlobalQuery,
-  PageBlocks,
   ServiceBlocks,
   ServiceQuery,
 } from "@/tina/__generated__/types";

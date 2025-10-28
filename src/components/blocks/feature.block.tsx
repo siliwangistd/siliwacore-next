@@ -3,6 +3,7 @@ import {
   PageBlocksFeatureList,
   ServiceBlocksFeatureList,
 } from "@/tina/__generated__/types";
+import Image from "next/image";
 
 // This component receives props that match the 'featureList' block schema.
 const FeatureBlock = (
@@ -27,10 +28,12 @@ const FeatureBlock = (
               className="flex flex-col items-center rounded-lg bg-white p-6 shadow-lg"
             >
               {feature?.icon && (
-                <img
+                <Image
                   // Links this <img> to the 'icon' field within a specific feature item.
                   data-tina-field={tinaField(feature, "icon")}
                   src={feature.icon}
+                  width={64}
+                  height={64}
                   alt=""
                   className="mb-4 h-16 w-16"
                 />

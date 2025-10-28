@@ -7,12 +7,12 @@ import Image from "next/image";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 
 type ServiceListBlockProps = {
-  services: { data: ServiceConnection | null };
+  services?: { data: ServiceConnection | null };
 } & PageBlocksServiceList;
 
 const ServiceListBlock = (props: ServiceListBlockProps) => {
   const { title, subheadline, services } = props;
-  const data = services.data;
+  const data = services?.data;
 
   return (
     <section className="py-16 bg-gray-50">

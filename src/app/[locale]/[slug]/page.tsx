@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import client from "@/tina/__generated__/client";
 
 import PageLayout from "@/components/layouts/page.layout";
+import { warn } from "console";
 
 type HomePageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -53,6 +54,7 @@ const HomePage = async (props: HomePageProps) => {
       <PageLayout initialPageData={pageRes} initialGlobalData={globalRes} />
     );
   } catch (error) {
+    warn("Error fetching page or global data:", error);
     notFound(); // 👈 Trigger 404 on any fetch error
   }
 };
