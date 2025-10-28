@@ -1,9 +1,9 @@
 import { tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { PageBlocksHero } from "@/tina/__generated__/types";
+import { PageBlocksHero, ServiceBlocksHero } from "@/tina/__generated__/types";
 
 // This component receives props that match the fields defined in your 'hero' block schema.
-export const HeroBlock = (props: PageBlocksHero) => {
+const HeroBlock = (props: PageBlocksHero | ServiceBlocksHero) => {
   return (
     <>
       <section className="bg-gray-100 py-20 text-center">
@@ -37,3 +37,5 @@ export const HeroBlock = (props: PageBlocksHero) => {
     </>
   );
 };
+
+export default HeroBlock;

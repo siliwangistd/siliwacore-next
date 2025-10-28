@@ -3,6 +3,7 @@ import client from "@/tina/__generated__/client";
 import { notFound } from "next/navigation";
 
 import PageLayout from "@/components/layouts/page.layout";
+import { ServiceConnection } from "@/tina/__generated__/types";
 
 type HomePageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -43,26 +44,55 @@ export async function generateMetadata({
 const HomePage = async (props: HomePageProps) => {
   const { locale } = await props.params;
 
-  try {
-    const [pageRes, globalRes] = await Promise.all([
-      client.queries.page({
-        relativePath: `${locale}/_index.mdx`,
-      }),
-      client.queries.global({
-        relativePath: `${locale}/_index.mdx`,
-      }),
-    ]);
+  // --- Step 1: Fetch only the page and global data ---
+  // (Note: I corrected your globalRes path from _index.mdx to .mdx)
+  const [pageRes, globalRes] = await Promise.all([
+    client.queries.page({
+      relativePath: `${locale}/_index.mdx`,
+    }),
+    client.queries.global({
+      relativePath: `${locale}/_index.mdx`,
+    }),
+  ]);
 
-    if (!pageRes.data.page) {
-      notFound(); // 👈 Trigger 404 if no page data
-    }
+  let servicesRes: { data: ServiceConnection } | null | undefined = null; // Initialize services as null
 
-    return (
-      <PageLayout initialPageData={pageRes} initialGlobalData={globalRes} />
-    );
-  } catch (error) {
-    notFound(); // 👈 Trigger 404 on any fetch error
-  }
+  // --- Step 2: Check if the page needs services data ---
+  const hasServiceList = pageRes.data.page.blocks?.some(
+    (block) => block?.__typename === "PageBlocksServiceList"
+  );
+
+  // --- Step 3: Fetch services ONLY if the block exists ---
+  const servicePromise = hasServiceList
+    ? client.queries.serviceConnection({
+        filter: {
+          draft: {
+            eq: false,
+          },
+        },
+      })
+    : Promise.resolve({ data: null });
+
+  const [serviceRes] = await Promise.all([servicePromise]);
+
+  const filteredServiceEdges = (
+    serviceRes?.data?.serviceConnection?.edges || []
+  ).filter((edge) =>
+    edge?.node?._sys.path.startsWith(`src/content/services/${locale}/`)
+  );
+
+  return (
+    <PageLayout
+      initialPageData={pageRes}
+      initialGlobalData={globalRes}
+      initialServicesData={{
+        data: {
+          ...serviceRes?.data?.serviceConnection,
+          edges: filteredServiceEdges,
+        } as ServiceConnection,
+      }}
+    />
+  );
 };
 
 export default HomePage;

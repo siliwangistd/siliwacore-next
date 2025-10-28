@@ -1,8 +1,13 @@
 import { tinaField } from "tinacms/dist/react";
-import { PageBlocksFeatureList } from "@/tina/__generated__/types";
+import {
+  PageBlocksFeatureList,
+  ServiceBlocksFeatureList,
+} from "@/tina/__generated__/types";
 
 // This component receives props that match the 'featureList' block schema.
-export const FeatureBlock = (props: PageBlocksFeatureList) => {
+const FeatureBlock = (
+  props: PageBlocksFeatureList | ServiceBlocksFeatureList
+) => {
   return (
     <section className="py-20">
       <div className="container mx-auto px-6 text-center">
@@ -51,3 +56,5 @@ export const FeatureBlock = (props: PageBlocksFeatureList) => {
     </section>
   );
 };
+
+export default FeatureBlock;

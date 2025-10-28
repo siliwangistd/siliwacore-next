@@ -22,22 +22,12 @@ export const routing = defineRouting({
   pathnames: {
     "/": "/",
 
-    // Example of a translated path:
-    // "/services/[serviceSlug]": {
-    //   en: "/services/[serviceSlug]",
-    //   id: "/layanan/[serviceSlug]",
-    // },
+    "/services/[slug]": {
+      en: "/services/[slug]",
+      id: "/layanan/[slug]",
+    },
   },
 });
-
-/**
- * Now we create special navigation tools (like `Link` and `useRouter`)
- * that automatically understand our language rules. Always import these
- * from this file instead of from 'next/navigation' to make sure your
- * links and redirects work correctly with different languages.
- */
-export const { Link, redirect, usePathname, useRouter, getPathname } =
-  createNavigation(routing);
 
 /**
  * This creates a handy TypeScript type called `Locale`.

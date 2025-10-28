@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { GlobalHeader } from "@/tina/__generated__/types";
+import { useLocale } from "next-intl";
 
 // The component receives a 'header' object with a specific type from TinaCMS.
 type HeaderProps = {
@@ -8,10 +9,12 @@ type HeaderProps = {
 };
 
 const Header = ({ header }: HeaderProps) => {
+  const locale = useLocale();
+
   return (
     <header className="py-4 px-8 border-b">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/">
+        <Link href={`/${locale}`} locale={locale}>
           {/* Use next/image for optimized images */}
           {header?.logo && (
             <Image

@@ -10,6 +10,11 @@ const featureBlock: Template = {
       label: "Features",
       type: "object",
       list: true,
+      ui: {
+        itemProps: (item: any) => {
+          return { label: item.title };
+        },
+      },
       fields: [
         { name: "icon", label: "Icon", type: "image" },
         { name: "title", label: "Feature Title", type: "string" },

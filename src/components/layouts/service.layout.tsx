@@ -7,8 +7,8 @@ import {
   GlobalHeader,
   GlobalQuery,
   PageBlocks,
-  PageQuery,
-  ServiceConnection,
+  ServiceBlocks,
+  ServiceQuery,
 } from "@/tina/__generated__/types";
 
 import Header from "@/components/global/header.global"; // Example component
@@ -16,9 +16,9 @@ import Footer from "@/components/global/footer.global"; // Example component
 import BlockRenderer from "@/components/layouts/blockRenderer.layout"; // Your component to render blocks
 
 // Define clear, flattened props
-type PageLayoutClientProps = {
-  initialPageData: {
-    data: PageQuery;
+type ServiceLayoutClientProps = {
+  initialServiceData: {
+    data: ServiceQuery;
     variables: Exact<{ relativePath: string }>;
     query: string;
   };
@@ -27,14 +27,14 @@ type PageLayoutClientProps = {
     variables: Exact<{ relativePath: string }>;
     query: string;
   };
-  initialServicesData: { data: ServiceConnection | null };
 };
 
-const PageLayout = (props: PageLayoutClientProps) => {
-  // Use the hook for both page and global data for a consistent editing experience
-  const { data: pageData } = useTina(props.initialPageData);
+const ServiceLayout = (props: ServiceLayoutClientProps) => {
+  // Use the hook for both service and global data for a consistent editing experience
+  const { data: serviceData } = useTina(props.initialServiceData);
   const { data: globalData } = useTina(props.initialGlobalData);
-  const serviceData = props.initialServicesData;
+
+  console.log("Rendering ServiceLayout with serviceData:", serviceData);
 
   return (
     <>
@@ -42,15 +42,11 @@ const PageLayout = (props: PageLayoutClientProps) => {
       <Header header={globalData.global.header as GlobalHeader} />
 
       <main>
-        {/* Render your page blocks */}
-        {pageData.page.blocks?.filter(Boolean).map((block, i) => (
+        {/* Render your service blocks */}
+        {serviceData.service.blocks?.filter(Boolean).map((block, i) => (
           // You might still need to cast the type here if TypeScript isn't smart enough
           // to infer the result of filter(Boolean).
-          <BlockRenderer
-            key={i}
-            block={block as PageBlocks}
-            services={serviceData}
-          />
+          <BlockRenderer key={i} block={block as ServiceBlocks} />
         ))}
       </main>
 
@@ -60,4 +56,4 @@ const PageLayout = (props: PageLayoutClientProps) => {
   );
 };
 
-export default PageLayout;
+export default ServiceLayout;

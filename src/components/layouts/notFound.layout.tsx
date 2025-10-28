@@ -14,7 +14,7 @@ import NotFoundTitle from "@/components/helpers/NotFoundTitle.helper";
 // Components for global header and footer
 import Header from "@/components/global/header.global";
 import Footer from "@/components/global/footer.global";
-import { Link } from "@/src/i18n/routing";
+import { Link } from "@/src/i18n/navigation";
 import Image from "next/image";
 
 // Define clear, flattened props
