@@ -35,9 +35,7 @@ const createSlugMap = async (
     });
   } catch (e) {
     /* ignore */
-    console.warn(
-      `createSlugMap: Error fetching serviceConnection for translationKey=${translationKey}: `
-    );
+    console.log(e);
   }
 
   // ... (add a similar try/catch for blogConnection if needed)

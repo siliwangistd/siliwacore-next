@@ -73,7 +73,7 @@ export default function LanguageSwitcher({ slugMap }: { slugMap?: SlugMap }) {
         >
           {localeConfig.map((locale) => {
             // --- 👇 NEW LOGIC ---
-            let newParams = { ...params };
+            const newParams = { ...params };
             let newHref: any = { pathname, params: newParams };
             let isDisabled = false;
 

@@ -3,7 +3,6 @@ import client from "@/tina/__generated__/client";
 
 import PageLayout from "@/components/layouts/page.layout";
 import { ServiceConnection } from "@/tina/__generated__/types";
-import createSlugMap from "@/src/components/helpers/createSlugMap.helper";
 import { warn } from "console";
 
 type HomePageProps = {
@@ -45,7 +44,7 @@ export async function generateMetadata({
 const HomePage = async (props: HomePageProps) => {
   const { locale } = await props.params;
 
-  let pageRes, globalRes, slugMap;
+  let pageRes, globalRes;
 
   try {
     // --- Step 1: Fetch only the page and global data ---
