@@ -17,7 +17,7 @@ const Header = ({ header, slugMap }: HeaderProps) => {
   return (
     <header className="py-4 px-8 border-b">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href={`/${locale}`} locale={locale}>
+        <Link href={`/${locale}`}>
           {/* Use next/image for optimized images */}
           {header?.logo && (
             <Image

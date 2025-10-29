@@ -31,7 +31,7 @@ const FeatureBlock = (
                 <Image
                   // Links this <img> to the 'icon' field within a specific feature item.
                   data-tina-field={tinaField(feature, "icon")}
-                  src={feature.icon}
+                  src={feature.icon ?? "#"}
                   width={64}
                   height={64}
                   alt=""

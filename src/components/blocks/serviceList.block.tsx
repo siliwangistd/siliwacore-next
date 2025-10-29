@@ -2,8 +2,8 @@ import type {
   PageBlocksServiceList,
   ServiceConnection,
 } from "@/tina/__generated__/types";
-import Link from "next/link";
 import Image from "next/image";
+import { Link } from "@/src/i18n/navigation";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 
 type ServiceListBlockProps = {
@@ -40,13 +40,13 @@ const ServiceListBlock = (props: ServiceListBlockProps) => {
               const slug = service._sys.filename;
               const locale = service._sys.breadcrumbs[0];
 
-              // Use the localized pathnames we defined
-              const pathPrefix = locale === "id" ? "layanan" : "services";
-
               return (
                 <Link
                   key={service.id}
-                  href={`/${locale}/${pathPrefix}/${slug}`}
+                  href={{
+                    pathname: "/services/[slug]",
+                    params: { slug },
+                  }}
                   className="block p-6 bg-white rounded-lg shadow-lg text-left hover:shadow-xl transition-shadow duration-300"
                   locale={locale}
                 >

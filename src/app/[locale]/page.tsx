@@ -59,12 +59,6 @@ const HomePage = async (props: HomePageProps) => {
       }),
     ]);
 
-    const translationKey = pageRes.data.page.translationKey;
-
-    if (translationKey) {
-      slugMap = await createSlugMap("page", translationKey);
-    }
-
     // --- Step 2: Check if the page needs services data ---
     const hasServiceList = pageRes.data.page.blocks?.some(
       (block) => block?.__typename === "PageBlocksServiceList"
@@ -99,7 +93,6 @@ const HomePage = async (props: HomePageProps) => {
             edges: filteredServiceEdges,
           } as ServiceConnection,
         }}
-        initialSlugMap={slugMap}
       />
     );
   } catch (error) {

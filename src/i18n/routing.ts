@@ -21,6 +21,11 @@ export const routing = defineRouting({
   pathnames: {
     "/": "/",
 
+    "/[slug]": {
+      en: "/[slug]",
+      id: "/[slug]",
+    },
+
     "/services/[slug]": {
       en: "/services/[slug]",
       id: "/layanan/[slug]",

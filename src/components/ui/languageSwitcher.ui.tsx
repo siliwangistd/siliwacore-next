@@ -56,22 +56,26 @@ export default function LanguageSwitcher({ slugMap }: { slugMap?: SlugMap }) {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex items-center gap-2 p-2 rounded-md hover:bg-gray-100 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <GlobeIcon className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        <GlobeIcon className="w-5 h-5 text-gray-700" />
+        <span className="text-sm font-medium text-gray-700">
           {currentLocaleData?.short}
         </span>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 ... " role="menu">
+        <div
+          className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg p-2"
+          role="menu"
+        >
           {localeConfig.map((locale) => {
             // --- 👇 NEW LOGIC ---
             let newParams = { ...params };
             let newHref: any = { pathname, params: newParams };
+            let isDisabled = false;
 
             if (slugMap && params && "slug" in params) {
               // This is a dynamic page with a slug map
@@ -81,14 +85,24 @@ export default function LanguageSwitcher({ slugMap }: { slugMap?: SlugMap }) {
                 newParams.slug = newSlug;
                 newHref = { pathname, params: newParams };
               } else {
-                // Fallback: This locale doesn't have a translation for this page
-                // We'll just link to the homepage for that locale
-                newHref = { pathname: "/" };
+                isDisabled = true;
               }
             } else {
-              // This is a static page (like homepage) or no map was found
-              // The old logic works fine here.
               newHref = { pathname, params: params as any };
+            }
+
+            if (isDisabled) {
+              return (
+                <span
+                  key={locale.code}
+                  className="block px-4 py-2 text-sm text-gray-400 cursor-not-allowed"
+                  role="menuitem"
+                  aria-disabled="true"
+                  title="This page has not been translated"
+                >
+                  {locale.name}
+                </span>
+              );
             }
             // --- END NEW LOGIC ---
 
@@ -97,7 +111,7 @@ export default function LanguageSwitcher({ slugMap }: { slugMap?: SlugMap }) {
                 key={locale.code}
                 href={newHref}
                 locale={locale.code}
-                className={`block px-4 py-2 text-sm ... `}
+                className={`block px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100`}
                 role="menuitem"
                 onClick={() => setIsOpen(false)}
               >
