@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { error as logError } from "console";
 import { notFound } from "next/navigation";
 import client from "@/tina/__generated__/client";
 import { ServiceConnection } from "@/tina/__generated__/types";
@@ -180,6 +179,7 @@ const RegularPage = async (props: RegularPageProps) => {
       />
     );
   } catch (error) {
+    console.warn("Error fetching data for home page:", error);
     return notFound();
   }
 };

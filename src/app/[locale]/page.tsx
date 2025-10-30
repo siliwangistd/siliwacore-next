@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { error as logError } from "console";
 import client from "@/tina/__generated__/client";
 import { ServiceConnection } from "@/tina/__generated__/types";
 
@@ -37,7 +36,6 @@ export async function generateMetadata({
   }
 
   const seo = page.seo;
-  const siteName = global?.siteInfo?.siteName || "Siliwacore";
   const pageTitle = seo?.metaTitle || page.title;
   const pageDescription = seo?.metaDescription || "";
   const pageImage = seo?.ogImage || null;
@@ -137,6 +135,7 @@ const HomePage = async (props: HomePageProps) => {
       />
     );
   } catch (error) {
+    console.warn("Error fetching data for home page:", error);
     return notFound();
   }
 };
