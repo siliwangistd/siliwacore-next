@@ -15,29 +15,57 @@ export async function generateMetadata({
 }: ServicesPageProps): Promise<Metadata> {
   const { locale } = await params;
 
-  const [pageRes, globalRes] = await Promise.all([
-    client.queries.page({
-      relativePath: `${locale}/_services.mdx`,
-    }),
-    client.queries.global({
-      relativePath: `${locale}/_index.mdx`,
-    }),
-  ]);
+  const pageRes = await client.queries.page({
+    relativePath: `${locale}/_services.mdx`,
+  });
 
+  // Safely get data. `page` might be undefined if not found.
   const page = pageRes.data.page;
-  const global = globalRes.data.global;
-  const siteName = global?.siteInfo?.siteName || "Siliwacore";
-  const pageTitle = page.seo?.metaTitle || page.title;
+
+  // A good fallback for SEO if the page data is missing.
+  if (!page) {
+    return {
+      title: "Page Not Found",
+      description: "The requested content could not be found.",
+    };
+  }
+
+  const seo = page.seo;
+  const pageTitle = seo?.metaTitle || page.title;
+  const pageDescription = seo?.metaDescription || "";
+  const pageImage = seo?.ogImage || null;
+
+  const keywords =
+    seo?.keywords?.filter((k): k is string => typeof k === "string") || [];
 
   return {
-    title: {
-      absolute: `${page.title} | ${siteName}`,
-    },
-    description: page.seo?.metaDescription,
+    // --- Main Meta ---
+    title: page.seo?.metaTitle || page.title,
+    description: pageDescription,
+    keywords: keywords,
+
+    // --- Open Graph (for social sharing) ---
     openGraph: {
       title: pageTitle,
-      description: page.seo?.metaDescription || "",
-      images: page.seo?.ogImage ? [page.seo.ogImage] : [],
+      description: pageDescription,
+      images: pageImage ? [pageImage] : [],
+    },
+
+    // --- Twitter Card ---
+    twitter: {
+      card: "summary_large_image",
+      title: pageTitle,
+      description: pageDescription,
+      images: pageImage ? [pageImage] : [],
+    },
+
+    // --- Other SEO Fields ---
+    alternates: {
+      canonical: seo?.canonical || undefined,
+    },
+    robots: {
+      index: !seo?.noindex,
+      follow: !seo?.noindex,
     },
   };
 }

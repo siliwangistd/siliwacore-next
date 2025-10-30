@@ -19,6 +19,25 @@ const seoFields: TinaField[] = [
       "The short description that appears in search engine results. Keep it between 50-160 characters.",
   },
   {
+    name: "keywords",
+    label: "SEO Keywords",
+    type: "string",
+    list: true,
+    description: "Relevant keywords to improve search engine visibility.",
+  },
+  {
+    name: "canonical",
+    label: "Canonical URL",
+    type: "string",
+    description:
+      "The preferred URL for this page to prevent duplicate content issues.",
+  },
+  {
+    name: "noindex",
+    label: "Noindex",
+    type: "boolean",
+  },
+  {
     type: "image",
     name: "ogImage",
     label: "Social Media Image (Open Graph)",

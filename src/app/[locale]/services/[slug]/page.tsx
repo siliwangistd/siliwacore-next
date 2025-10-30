@@ -15,19 +15,57 @@ export async function generateMetadata({
 }: ServicePageProps): Promise<Metadata> {
   const { locale, slug } = await params;
 
-  const serviceRes = await client.queries.service({
+  const pageRes = await client.queries.page({
     relativePath: `${locale}/${slug}.mdx`,
   });
 
-  const service = serviceRes.data.service;
+  // Safely get data. `page` might be undefined if not found.
+  const page = pageRes.data.page;
+
+  // A good fallback for SEO if the page data is missing.
+  if (!page) {
+    return {
+      title: "Page Not Found",
+      description: "The requested content could not be found.",
+    };
+  }
+
+  const seo = page.seo;
+  const pageTitle = seo?.metaTitle || page.title;
+  const pageDescription = seo?.metaDescription || "";
+  const pageImage = seo?.ogImage || null;
+
+  const keywords =
+    seo?.keywords?.filter((k): k is string => typeof k === "string") || [];
 
   return {
-    title: service.seo?.metaTitle || service.title,
-    description: service.seo?.metaDescription,
+    // --- Main Meta ---
+    title: page.seo?.metaTitle || page.title,
+    description: pageDescription,
+    keywords: keywords,
+
+    // --- Open Graph (for social sharing) ---
     openGraph: {
-      title: service.seo?.metaTitle || service.title,
-      description: service.seo?.metaDescription || "",
-      images: service.seo?.ogImage ? [service.seo.ogImage] : [],
+      title: pageTitle,
+      description: pageDescription,
+      images: pageImage ? [pageImage] : [],
+    },
+
+    // --- Twitter Card ---
+    twitter: {
+      card: "summary_large_image",
+      title: pageTitle,
+      description: pageDescription,
+      images: pageImage ? [pageImage] : [],
+    },
+
+    // --- Other SEO Fields ---
+    alternates: {
+      canonical: seo?.canonical || undefined,
+    },
+    robots: {
+      index: !seo?.noindex,
+      follow: !seo?.noindex,
     },
   };
 }

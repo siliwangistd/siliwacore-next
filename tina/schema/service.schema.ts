@@ -46,6 +46,17 @@ const serviceSchema: Collection = {
     },
     {
       type: "string",
+      name: "locale",
+      label: "Locale",
+      required: true,
+      description: "This field specifies the language for this page.",
+      options: [
+        { label: "English", value: "en" },
+        { label: "Bahasa Indonesia", value: "id" },
+      ],
+    },
+    {
+      type: "string",
       name: "translationKey",
       label: "Translation Key",
       required: true,
@@ -56,7 +67,6 @@ const serviceSchema: Collection = {
       label: "SEO Settings",
       fields: seoFields,
     },
-    // --- Fields for the "Card" on the homepage ---
     {
       type: "image",
       name: "icon",

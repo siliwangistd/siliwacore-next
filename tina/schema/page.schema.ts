@@ -5,6 +5,7 @@ import heroBlock from "@/tina/schema/blocks/hero.block";
 import featureBlock from "@/tina/schema/blocks/feature.block";
 import seoFields from "@/tina/schema/fields/seo.field";
 import serviceListBlock from "@/tina/schema/blocks/service.block";
+import notFoundBlock from "@/tina/schema/blocks/notFound.block";
 
 const pageSchema: Collection = {
   name: "page",
@@ -46,6 +47,17 @@ const pageSchema: Collection = {
     },
     {
       type: "string",
+      name: "locale",
+      label: "Locale",
+      required: true,
+      description: "This field specifies the language for this page.",
+      options: [
+        { label: "English", value: "en" },
+        { label: "Bahasa Indonesia", value: "id" },
+      ],
+    },
+    {
+      type: "string",
       name: "translationKey",
       label: "Translation Key",
       required: true,
@@ -66,6 +78,7 @@ const pageSchema: Collection = {
         heroBlock,
         featureBlock,
         serviceListBlock,
+        notFoundBlock,
       ],
     },
   ],

@@ -16,6 +16,9 @@ const DynamicFeatureList = dynamic(() =>
 const DynamicServiceList = dynamic(() =>
   import("@/components/blocks/serviceList.block").then((mod) => mod.default)
 );
+const DynamicNotFound = dynamic(() =>
+  import("@/components/blocks/notFound.block").then((mod) => mod.default)
+);
 // ... add all your other 50+ dynamic imports here
 
 type BlockRendererProps = {
@@ -35,6 +38,9 @@ const BlockRenderer = ({ block, services }: BlockRendererProps) => {
 
     case "PageBlocksServiceList":
       return <DynamicServiceList {...block} services={services} />;
+
+    case "PageBlocksNotFound":
+      return <DynamicNotFound {...block} />;
 
     // Service Blocks
     case "ServiceBlocksHero":

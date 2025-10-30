@@ -1,15 +1,10 @@
 import { Collection } from "tinacms";
-// If you create reusable field groups, you can import them like this:
-// import { buttonFields } from "../fields/button";
 
 const globalSchema: Collection = {
   name: "global",
   label: "Globals",
-  // We point to a single file in the content directory
   path: "src/content/global",
   format: "mdx",
-  // This tells TinaCMS that this is a single-file collection.
-  // It prevents editors from creating or deleting documents in this collection.
   ui: {
     allowedActions: {
       create: false,
@@ -18,7 +13,6 @@ const globalSchema: Collection = {
     global: true,
   },
   fields: [
-    // We group fields into objects for better organization in the UI
     {
       name: "siteInfo",
       label: "Site Information",
@@ -87,8 +81,6 @@ const globalSchema: Collection = {
           label: "Call-to-Action Button",
           type: "object",
           fields: [
-            // This is a great place to use a reusable field group
-            // ...buttonFields
             {
               name: "label",
               label: "Button Label",

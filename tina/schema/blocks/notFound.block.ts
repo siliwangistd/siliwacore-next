@@ -1,33 +1,20 @@
-import { Collection } from "tinacms";
+import type { Template } from "tinacms";
 
-const notFoundSchema: Collection = {
+const notFoundBlock: Template = {
   name: "notFound",
-  label: "404 Page",
-  path: "src/content/notFound", // Content will be stored here
-  format: "mdx", // Using MDX format as requested
-  ui: {
-    // This prevents editors from creating/deleting the essential 404 files
-    allowedActions: {
-      create: false,
-      delete: false,
-    },
-  },
+  label: "Not Found",
   fields: [
     // All content will be stored in the MDX frontmatter
     {
       type: "string",
       name: "title",
       label: "Title",
-      required: true,
       description: "The main headline (e.g., 'Page Not Found').",
     },
     {
-      type: "string",
+      type: "rich-text",
       name: "description",
       label: "Description",
-      ui: {
-        component: "textarea",
-      },
       description: "The helpful text explaining what happened.",
     },
     {
@@ -46,4 +33,4 @@ const notFoundSchema: Collection = {
   ],
 };
 
-export default notFoundSchema;
+export default notFoundBlock;
