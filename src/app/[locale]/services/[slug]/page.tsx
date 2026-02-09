@@ -15,12 +15,12 @@ export async function generateMetadata({
 }: ServicePageProps): Promise<Metadata> {
   const { locale, slug } = await params;
 
-  const pageRes = await client.queries.page({
+  const pageRes = await client.queries.service({
     relativePath: `${locale}/${slug}.mdx`,
   });
 
   // Safely get data. `page` might be undefined if not found.
-  const page = pageRes.data.page;
+  const page = pageRes.data.service;
 
   // A good fallback for SEO if the page data is missing.
   if (!page) {

@@ -128,7 +128,7 @@ const RegularPage = async (props: RegularPageProps) => {
     // --- Step 2: Check if the 'ServiceList' block is used ---
     // We check the page's block data to decide if we need more data.
     const hasServiceList = pageRes.data.page.blocks?.some(
-      (block) => block?.__typename === "PageBlocksServiceList"
+      (block) => block?.__typename === "PageBlocksServiceList",
     );
 
     // --- Step 3: Conditionally create a promise for services ---
