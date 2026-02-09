@@ -18,7 +18,16 @@ export default defineConfig({
   // Get this from tina.io
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
   // Get this from tina.io
-  token: process.env.TINA_TOKEN,
+  token: process.env.TINA_TOKEN_CONTENT,
+  // Get this from tina.io
+  search: {
+    tina: {
+      indexerToken: process.env.TINA_TOKEN_SEARCH,
+      stopwordLanguages: ["eng", "ind"],
+    },
+    indexBatchSize: 100,
+    maxSearchIndexFieldLength: 100,
+  },
 
   build: {
     outputFolder: "admin",
