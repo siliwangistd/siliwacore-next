@@ -40,7 +40,7 @@ export async function generateMetadata({
 
   return {
     // --- Main Meta ---
-    title: page.seo?.metaTitle || page.title,
+    title: pageTitle,
     description: pageDescription,
     keywords: keywords,
 
@@ -94,7 +94,7 @@ const ServicesPage = async (props: ServicesPageProps) => {
 
     // --- Step 2: Check if the page needs services data ---
     const hasServiceList = pageRes.data.page.blocks?.some(
-      (block) => block?.__typename === "PageBlocksServiceList"
+      (block) => block?.__typename === "PageBlocksServiceList",
     );
 
     // --- Step 3: Fetch services ONLY if the block exists ---
@@ -113,7 +113,7 @@ const ServicesPage = async (props: ServicesPageProps) => {
     const filteredServiceEdges = (
       serviceRes?.data?.serviceConnection?.edges || []
     ).filter((edge) =>
-      edge?.node?._sys.path.startsWith(`src/content/services/${locale}/`)
+      edge?.node?._sys.path.startsWith(`src/content/services/${locale}/`),
     );
 
     return (

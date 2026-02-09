@@ -6,6 +6,7 @@ import PageLayout from "@/components/layouts/page.layout";
 import createSlugMap from "@/src/components/helpers/createSlugMap.helper";
 import { notFound } from "next/navigation";
 import { routing } from "@/src/i18n/routing";
+import site from "@/src/config/site.json";
 
 type HomePageProps = {
   params: Promise<{ locale: string; slug: string }>;
@@ -36,7 +37,8 @@ export async function generateMetadata({
   }
 
   const seo = page.seo;
-  const pageTitle = seo?.metaTitle || page.title;
+  const basedTitle = seo?.metaTitle || page.title;
+  const pageTitle = basedTitle + " | " + site.name;
   const pageDescription = seo?.metaDescription || "";
   const pageImage = seo?.ogImage || null;
 
@@ -45,7 +47,7 @@ export async function generateMetadata({
 
   return {
     // --- Main Meta ---
-    title: page.seo?.metaTitle || page.title,
+    title: pageTitle,
     description: pageDescription,
     keywords: keywords,
 
@@ -100,7 +102,7 @@ const HomePage = async (props: HomePageProps) => {
     }
 
     const hasServiceList = pageRes.data.page.blocks?.some(
-      (block) => block?.__typename === "PageBlocksServiceList"
+      (block) => block?.__typename === "PageBlocksServiceList",
     );
 
     const servicePromise = hasServiceList
