@@ -3,7 +3,7 @@ import { SlugMap } from "../layouts/page.layout";
 
 const createSlugMap = async (
   collection: string,
-  translationKey: string
+  translationKey: string,
 ): Promise<SlugMap> => {
   const slugMap: SlugMap = {};
 
@@ -19,7 +19,7 @@ const createSlugMap = async (
     });
   } catch (e: any) {
     console.warn(
-      `createSlugMap: Error fetching pageConnection for key="${translationKey}". ${e.message}`
+      `createSlugMap: Error fetching pageConnection for key="${translationKey}". ${e.message}`,
     );
   }
 
@@ -38,7 +38,35 @@ const createSlugMap = async (
     console.log(e);
   }
 
-  // ... (add a similar try/catch for blogConnection if needed)
+  try {
+    const caseStudies = await client.queries.caseStudyConnection({
+      filter: { translationKey: { eq: translationKey } },
+    });
+    caseStudies?.data?.caseStudyConnection?.edges?.forEach((edge) => {
+      if (edge?.node) {
+        const locale = edge.node._sys.breadcrumbs[0];
+        slugMap[locale] = edge.node._sys.filename;
+      }
+    });
+  } catch (e) {
+    /* ignore */
+    console.log(e);
+  }
+
+  try {
+    const blogs = await client.queries.blogConnection({
+      filter: { translationKey: { eq: translationKey } },
+    });
+    blogs?.data?.blogConnection?.edges?.forEach((edge) => {
+      if (edge?.node) {
+        const locale = edge.node._sys.breadcrumbs[0];
+        slugMap[locale] = edge.node._sys.filename;
+      }
+    });
+  } catch (e) {
+    /* ignore */
+    console.log(e);
+  }
 
   return slugMap;
 };

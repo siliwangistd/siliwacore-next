@@ -35,6 +35,31 @@ export const routing = defineRouting({
       en: "/services",
       id: "/layanan",
     },
+
+    "/case-studies/[slug]": {
+      en: "/case-studies/[slug]",
+      id: "/studi-kasus/[slug]",
+    },
+
+    "/case-studies": {
+      en: "/case-studies",
+      id: "/studi-kasus",
+    },
+
+    "/blog/[slug]": {
+      en: "/blog/[slug]",
+      id: "/blog/[slug]",
+    },
+
+    "/blog": {
+      en: "/blog",
+      id: "/blog",
+    },
+
+    "/blog/tag/[tag]": {
+      en: "/blog/tag/[tag]",
+      id: "/blog/tag/[tag]",
+    },
   },
 });
 

@@ -2,12 +2,18 @@ import { tinaField } from "tinacms/dist/react";
 import {
   PageBlocksFeatureList,
   ServiceBlocksFeatureList,
+  CaseStudyBlocksFeatureList,
+  BlogBlocksFeatureList,
 } from "@/tina/__generated__/types";
 import Image from "next/image";
 
 // This component receives props that match the 'featureList' block schema.
 const FeatureBlock = (
-  props: PageBlocksFeatureList | ServiceBlocksFeatureList
+  props:
+    | PageBlocksFeatureList
+    | ServiceBlocksFeatureList
+    | CaseStudyBlocksFeatureList
+    | BlogBlocksFeatureList,
 ) => {
   return (
     <section className="py-20">
