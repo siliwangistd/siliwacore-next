@@ -4,6 +4,8 @@ import { defineConfig } from "tinacms";
 import pageSchema from "@/tina/schema/page.schema";
 import globalSchema from "@/tina/schema/global.schema";
 import serviceSchema from "./schema/service.schema";
+import caseStudySchema from "./schema/caseStudy.schema";
+import blogSchema from "./schema/blog.schema";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -42,7 +44,13 @@ export default defineConfig({
 
   // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
   schema: {
-    collections: [pageSchema, serviceSchema, globalSchema],
+    collections: [
+      pageSchema,
+      serviceSchema,
+      caseStudySchema,
+      blogSchema,
+      globalSchema,
+    ],
   },
 
   cmsCallback: (cms) => {

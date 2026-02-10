@@ -9,6 +9,8 @@ import {
   PageBlocks,
   PageQuery,
   ServiceConnection,
+  CaseStudyConnection,
+  BlogConnection,
 } from "@/tina/__generated__/types";
 
 import Header from "@/components/global/header.global"; // Example component
@@ -30,7 +32,10 @@ type PageLayoutClientProps = {
     query: string;
   };
   initialServicesData?: { data: ServiceConnection | null };
+  initialCaseStudiesData?: { data: CaseStudyConnection | null };
+  initialBlogsData?: { data: BlogConnection | null };
   initialSlugMap?: SlugMap;
+  activeTag?: string;
 };
 
 const PageLayout = (props: PageLayoutClientProps) => {
@@ -38,6 +43,8 @@ const PageLayout = (props: PageLayoutClientProps) => {
   const { data: pageData } = useTina(props.initialPageData);
   const { data: globalData } = useTina(props.initialGlobalData);
   const serviceData = props.initialServicesData;
+  const caseStudyData = props.initialCaseStudiesData;
+  const blogData = props.initialBlogsData;
 
   return (
     <>
@@ -56,6 +63,9 @@ const PageLayout = (props: PageLayoutClientProps) => {
             key={i}
             block={block as PageBlocks}
             services={serviceData}
+            caseStudies={caseStudyData}
+            blogs={blogData}
+            activeTag={props.activeTag}
           />
         ))}
       </main>

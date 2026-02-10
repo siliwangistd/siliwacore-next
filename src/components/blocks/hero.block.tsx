@@ -1,10 +1,21 @@
 import { tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
-import { PageBlocksHero, ServiceBlocksHero } from "@/tina/__generated__/types";
+import {
+  PageBlocksHero,
+  ServiceBlocksHero,
+  CaseStudyBlocksHero,
+  BlogBlocksHero,
+} from "@/tina/__generated__/types";
 import Image from "next/image";
 
 // This component receives props that match the fields defined in your 'hero' block schema.
-const HeroBlock = (props: PageBlocksHero | ServiceBlocksHero) => {
+const HeroBlock = (
+  props:
+    | PageBlocksHero
+    | ServiceBlocksHero
+    | CaseStudyBlocksHero
+    | BlogBlocksHero,
+) => {
   return (
     <>
       <section className="bg-gray-100 py-20 text-center">
